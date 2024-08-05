@@ -1,87 +1,117 @@
-<div class="container">
-  <!-- Product List -->
+<h1>JK's Store</h1>
+<app-navbar></app-navbar>
+
+<div id="container">
   <div id="product-container">
-    <ng-container *ngFor="let product of products; index as i">
-      <div class="product-item" (click)="showProductDetails(product)">
-        <img [src]="product.image" [alt]="product.name">
-        <div class="product-details">
-          <h3>{{ product.name }}</h3>
-          <p>Giá: {{ product.price }} VND</p>
-          <p>Tồn kho: {{ product.inStock }}</p>
-        </div>
-        <button 
-          class="add-to-cart-btn" 
-          [disabled]="product.inStock === 0" 
-          (click)="addToCart(i); $event.stopPropagation()">
-          Thêm vào giỏ
-        </button>
-      </div>
-    </ng-container>
-  </div>
-
-  <!-- Product Description Modal -->
-  <div *ngIf="selectedProduct" class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="selectedProduct = null">&times;</span>
-      <h2>{{ selectedProduct.name }}</h2>
-      <img [src]="selectedProduct.image" [alt]="selectedProduct.name">
-      <p>{{ selectedProduct.description }}</p>
-      <button class="close-modal-btn" (click)="selectedProduct = null">Đóng</button>
-    </div>
-  </div>
-
-  <!-- Cart and Completed Orders -->
-  <div id="cart-and-orders">
-    <!-- Cart -->
-    <div id="cart-container">
-      <ng-container *ngIf="cart.length > 0; else emptyCart">
-        <div class="cart-header">
-          <h2>Giỏ hàng</h2>
-          <button (click)="checkout()">Thanh toán</button>
-        </div>
-        <div class="cart-items">
-          <ng-container *ngFor="let product of cart; index as i">
-            <div class="cart-item">
-              <img [src]="product.image" [alt]="product.name">
-              <div class="cart-details">
-                <p>{{ product.name }}</p>
-                <p>Giá: {{ product.price }} VND</p>
-                <p>Số lượng: {{ product.quantity }}</p>
-              </div>
-              <button 
-                class="remove-from-cart-btn" 
-                (click)="removeFromCart(i)">
-                Xoá
-              </button>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
-      <ng-template #emptyCart>
-        <p>Giỏ hàng đang trống.</p>
-      </ng-template>
-    </div>
-
-    <!-- Completed Orders -->
-    <div id="completed-order-container">
-      <ng-container *ngIf="completedOrder.length > 0">
-        <div class="completed-order-header">
-          <h2>Đơn hàng đã thanh toán</h2>
-        </div>
-        <div class="completed-order-items">
-          <ng-container *ngFor="let product of completedOrder">
-            <div class="completed-order-item">
-              <img [src]="product.image" [alt]="product.name">
-              <div class="completed-order-details">
-                <p>{{ product.name }}</p>
-                <p>Giá: {{ product.price }} VND</p>
-                <p>Số lượng: {{ product.quantity }}</p>
-              </div>
-            </div>
-          </ng-container>
-          <h3>Tổng giá trị đơn hàng: {{ getTotalPrice() }} VND</h3>
-        </div>
-      </ng-container>
-    </div>
+    @for (prod of this.storeService.products; track $index) {
+      <app-card
+        [product]="prod"
+        (addToCartEvent)="storeService.addToCart($index)"
+      ></app-card>
+    }
   </div>
 </div>
+
+<h2>Cart</h2>
+@for (prod of this.storeService.cart; track $index) {
+  <app-cart
+    [product]="prod"
+    (deleteEvent)="storeService.deleteCart($index)"
+  ></app-cart>
+}
+
+<app-checkout></app-checkout>
+<!--<div>-->
+<!--  @for (prod of this.storeService.products; track $index) {-->
+<!--    <app-product-card [product]="prod"></app-product-card>-->
+<!--  }-->
+<!--</div>-->
+<!--<div>-->
+<!--  <h1>Giỏ Hàng</h1>-->
+<!--  @for (item of this.storeService.cart; track $index) {-->
+<!--    <h1>Tên:{{ item.name }}</h1>-->
+<!--    <h2>Giá:{{ item.price }}</h2>-->
+<!--    <h3>Số lượng:{{ item.quantity }}</h3>-->
+<!--  }-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--  &lt;!&ndash; Product List &ndash;&gt;-->
+<!--  <div id="product-container">-->
+<!--    <ng-container *ngFor="let product of products; index as i">-->
+<!--     <app-product-card [product]="product"> </app-product-card>-->
+<!--        <button-->
+<!--          class="add-to-cart-btn"-->
+<!--          [disabled]="product.inStock === 0"-->
+<!--          (click)="addToCart(i); $event.stopPropagation()"-->
+<!--        >-->
+<!--          Thêm vào giỏ-->
+<!--        </button>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Product Description Modal &ndash;&gt;-->
+<!--  <div *ngIf="selectedProduct" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--      <span class="close" (click)="selectedProduct = null">&times;</span>-->
+<!--      <h2>{{ selectedProduct.name }}</h2>-->
+<!--      <img [src]="selectedProduct.image" [alt]="selectedProduct.name" />-->
+<!--      <p>{{ selectedProduct.description }}</p>-->
+<!--      <button class="close-modal-btn" (click)="selectedProduct = null">-->
+<!--        Đóng-->
+<!--      </button>-->
+
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Cart and Completed Orders &ndash;&gt;-->
+<!--  <div id="cart-and-orders">-->
+<!--    &lt;!&ndash; Cart &ndash;&gt;-->
+<!--    <div id="cart-container">-->
+<!--      <ng-container *ngIf="cart.length > 0; else emptyCart">-->
+<!--        <div class="cart-header">-->
+<!--          <h2>Giỏ hàng</h2>-->
+<!--          <button (click)="checkout()">Thanh toán</button>-->
+<!--        </div>-->
+<!--        <div class="cart-items">-->
+<!--          <ng-container *ngFor="let product of cart; index as i">-->
+<!--            <div class="cart-item">-->
+<!--              <img [src]="product.image" [alt]="product.name" />-->
+<!--              <div class="cart-details">-->
+<!--                <p>{{ product.name }}</p>-->
+<!--                <p>Giá: {{ product.price }} VND</p>-->
+<!--                <p>Số lượng: {{ product.quantity }}</p>-->
+<!--              </div>-->
+<!--              <button class="remove-from-cart-btn" (click)="removeFromCart(i)">-->
+<!--                Xoá-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--      <ng-template #emptyCart>-->
+<!--        <p>Giỏ hàng đang trống.</p>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Completed Orders &ndash;&gt;-->
+<!--    <div id="completed-order-container">-->
+<!--      <ng-container *ngIf="completedOrder.length > 0">-->
+<!--        <div class="completed-order-header">-->
+<!--          <h2>Đơn hàng đã thanh toán</h2>-->
+<!--        </div>-->
+<!--        <div class="completed-order-items">-->
+<!--          <ng-container *ngFor="let product of completedOrder">-->
+<!--            <div class="completed-order-item">-->
+<!--              <img [src]="product.image" [alt]="product.name" />-->
+<!--              <div class="completed-order-details">-->
+<!--                <p>{{ product.name }}</p>-->
+<!--                <p>Giá: {{ product.price }} VND</p>-->
+<!--                <p>Số lượng: {{ product.quantity }}</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--          <h3>Tổng giá trị đơn hàng: {{ getTotalPrice() }} VND</h3>-->
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

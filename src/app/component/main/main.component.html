@@ -1,0 +1,22 @@
+<h1>DANH SACH MAT HANG HIEN CO</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+  @for (item of storeService.danhSachSanPham; track $index) {
+    <card class="example-card">
+      <header>
+        <div class="example-header-image"></div>
+        <title>{{ item.id }}</title>
+        <subtitle>{{ item.ten }}</subtitle>
+      </header>
+      <img src="lamBorghini.jpg" />
+      <content>
+        <p>
+          {{ item.gia }}
+        </p>
+      </content>
+      <actions>
+        <button (click)="storeService.boGioHang(item)">MUA</button>
+        <button (click)="storeService.xoaSanPham($index)">XOA</button>
+      </actions>
+    </card>
+  }
+</div>

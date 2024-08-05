@@ -1,0 +1,68 @@
+/* Variables for color scheme */
+$background-color: #f9f9f9;
+$white-color: #fff;
+$primary-color: #28a745;
+$primary-hover-color: #218838;
+$danger-color: #dc3545;
+$danger-hover-color: #c82333;
+$secondary-color: #ccc;
+$text-color: #555;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+$transition-duration: 0.3s;
+
+/* Container for the cart items */
+#cart-container {
+  background-color: $white-color;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  padding: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow $transition-duration;
+
+  &:hover {
+    box-shadow: $box-shadow-hover;
+  }
+
+  p {
+    margin: 0;
+    color: $text-color;
+    font-size: 1em;
+    font-weight: 500;
+  }
+
+  button {
+    background-color: $primary-color;
+    color: $white-color;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition:
+      background-color $transition-duration,
+      transform $transition-duration;
+
+    &:hover {
+      background-color: $primary-hover-color;
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      background-color: $secondary-color;
+      cursor: not-allowed;
+    }
+
+    &.remove-button {
+      background-color: $danger-color;
+      margin-left: 10px;
+
+      &:hover {
+        background-color: $danger-hover-color;
+      }
+    }
+  }
+}

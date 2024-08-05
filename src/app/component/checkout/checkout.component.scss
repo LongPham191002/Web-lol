@@ -1,0 +1,26 @@
+/* Variables for text styling */
+$text-color: #333;
+$primary-font-size: 16px;
+$first-font-weight: bold;
+$first-font-size: 18px;
+$last-color: #dc3545;
+$last-font-size: 20px;
+$last-font-weight: bold;
+
+/* Paragraph styling */
+p {
+  margin: 5px 0;
+  color: $text-color;
+  font-size: $primary-font-size;
+
+  &:first-of-type {
+    font-weight: $first-font-weight;
+    font-size: $first-font-size;
+  }
+
+  &:last-of-type {
+    color: $last-color;
+    font-size: $last-font-size;
+    font-weight: $last-font-weight;
+  }
+}
